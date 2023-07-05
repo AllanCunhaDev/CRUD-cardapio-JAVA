@@ -1,8 +1,14 @@
 package com.example.cardapio.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,8 +18,6 @@ import com.example.cardapio.food.Food;
 import com.example.cardapio.food.FoodRepository;
 import com.example.cardapio.food.FoodRequestDTO;
 import com.example.cardapio.food.FoodResponseDTO;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("food")
@@ -26,7 +30,7 @@ public class FoodController {
     @PostMapping
     public void saveFood(@RequestBody FoodRequestDTO data) {
         Food foodData = new Food (data);
-        repository.save(foodData );
+        repository.save(foodData);
         return;
     }
 
@@ -37,6 +41,13 @@ public class FoodController {
         List<FoodResponseDTO> foodList = repository.findAll().stream().map(FoodResponseDTO::new).toList();
         return foodList;
 
+    }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePost(@PathVariable Food id){
+        repository.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }
