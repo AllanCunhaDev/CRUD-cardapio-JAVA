@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.cardapio.food.Food;
+// import com.example.cardapio.food.FoodMongoRepository;
 import com.example.cardapio.food.FoodRepository;
 import com.example.cardapio.food.FoodRequestDTO;
 import com.example.cardapio.food.FoodResponseDTO;
@@ -25,6 +26,7 @@ public class FoodController {
 
     @Autowired
     private FoodRepository repository;
+    // private FoodMongoRepository mongoRepositorio;
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping
@@ -46,7 +48,7 @@ public class FoodController {
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePost(@PathVariable Food id){
-        repository.delete(id);
+       repository.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
